@@ -513,7 +513,7 @@ Apr 07 19:00:09 vagrant netdata[713]: 2022-04-07 19:00:09: netdata INFO  : MAIN 
 ---
 
 ---
-ссылка 
+![](https://github.com/sergeev-anton/devops-netology/blob/fbe39e44dc9385a7f5a4e93ee8448b00cad805d7/Anton_HW/HW_3.4/pic.JPG)
 ---
 
 
@@ -546,17 +546,19 @@ fs.nr_open = 1048576
 
 6. Запустите любой долгоживущий процесс (не ls, который отработает мгновенно, а, например, sleep 1h) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через nsenter. Для простоты работайте в данном задании под root (sudo -i). Под обычным пользователем требуются дополнительные опции (--map-root-user) и т.д.
 
-ссылка 
+![](https://github.com/sergeev-anton/devops-netology/blob/fbe39e44dc9385a7f5a4e93ee8448b00cad805d7/Anton_HW/HW_3.4/pic2.JPG)
 
 ---
 ТЕРМИНАЛ 1 
 
 vagrant@vagrant:~$ sudo unshare -f --pid --mount-proc sleep 1h
 
+---
 ТЕРМИНАЛ 2 
 
 vagrant@vagrant:~$ ps -e | grep sleep
    1991 pts/4    00:00:00 sleep
+
 vagrant@vagrant:~$ sudo nsenter --target 1991 --mount --uts --ipc --net --pid ps aux
 USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
 root           1  0.0  0.0   5476   524 pts/4    S+   15:35   0:00 sleep 1h
