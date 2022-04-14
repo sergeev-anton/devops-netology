@@ -132,189 +132,353 @@ TERM 2
 ---
 
 root@vagrant:/home/vagrant# ps aux | grep ping
+
 vagrant     2048  0.0  0.0   7208  2840 pts/1    S+   18:37   0:00 ping ya.ru
+
 root        2051  0.0  0.0   6300   736 pts/0    S+   18:37   0:00 grep --color=auto ping
+
 root@vagrant:/home/vagrant# lsof -p 2048
+
 COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
+
 ping    2048 vagrant  cwd    DIR  253,0  2883584 1051845 /home/vagrant
+
 ping    2048 vagrant  rtd    DIR  253,0     4096       2 /
+
 ping    2048 vagrant  txt    REG  253,0    72776 1835881 /usr/bin/ping
+
 ping    2048 vagrant  mem    REG  253,0    31176 1841606 /usr/lib/x86_64-linux-gnu/libnss_dns-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0    51832 1841607 /usr/lib/x86_64-linux-gnu/libnss_files-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0  3035952 1835290 /usr/lib/locale/locale-archive
-ping    2048 vagrant  mem    REG  253,0   137584 1841525 /usr/lib/x86_64-linux-gnu/libgpg-error.so.0.28.0
+
+ping    2048 vagrant  mem    REG  253,0   137584 1841525 /usr/lib/x86_64-linux-gnu/libgpg-error.so.0.28
+.0
 ping    2048 vagrant  mem    REG  253,0  2029224 1841468 /usr/lib/x86_64-linux-gnu/libc-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0   101320 1841650 /usr/lib/x86_64-linux-gnu/libresolv-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0  1168056 1835853 /usr/lib/x86_64-linux-gnu/libgcrypt.so.20.2.5
+
 ping    2048 vagrant  mem    REG  253,0    31120 1841471 /usr/lib/x86_64-linux-gnu/libcap.so.2.32
+
 ping    2048 vagrant  mem    REG  253,0   191472 1841428 /usr/lib/x86_64-linux-gnu/ld-2.31.so
+
 ping    2048 vagrant    0u   CHR  136,1      0t0       4 /dev/pts/1
+
 ping    2048 vagrant    1w   REG  253,0     2211 1048685 /home/vagrant/ping_log
+
 ping    2048 vagrant    2u   CHR  136,1      0t0       4 /dev/pts/1
+
 ping    2048 vagrant    3u  icmp             0t0   35662 00000000:0004->00000000:0000
+
 ping    2048 vagrant    4u  sock    0,9      0t0   35663 protocol: PINGv6
+
+
 root@vagrant:/home/vagrant# df -k
+
 Filesystem                        1K-blocks      Used Available Use% Mounted on
+
 udev                                2999144         0   2999144   0% /dev
+
 tmpfs                                608864      1028    607836   1% /run
+
 /dev/mapper/ubuntu--vg-ubuntu--lv  32380720   4439740  26273092  15% /
+
 tmpfs                               3044312         0   3044312   0% /dev/shm
+
 tmpfs                                  5120         0      5120   0% /run/lock
+
 tmpfs                               3044312         0   3044312   0% /sys/fs/cgroup
+
 /dev/loop2                            63488     63488         0 100% /snap/core20/1376
+
 /dev/loop0                            56960     56960         0 100% /snap/core18/2344
+
 /dev/loop3                            63488     63488         0 100% /snap/core20/1405
+
 /dev/sda2                            999320    108612    821896  12% /boot
+
 /dev/loop1                            56832     56832         0 100% /snap/core18/2128
+
 /dev/loop4                            69632     69632         0 100% /snap/lxd/22526
+
 /dev/loop5                            69504     69504         0 100% /snap/lxd/22753
+
 /dev/loop6                            44800     44800         0 100% /snap/snapd/15177
+
 /dev/loop7                            45824     45824         0 100% /snap/snapd/15314
+
 vagrant                           497275900 197887776 299388124  40% /vagrant
+
 tmpfs                                608860         0    608860   0% /run/user/1000
+
 root@vagrant:/home/vagrant# rm ping_log
+
 root@vagrant:/home/vagrant# lsof -p 2048
+
 COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
+
 ping    2048 vagrant  cwd    DIR  253,0  2883584 1051845 /home/vagrant
+
 ping    2048 vagrant  rtd    DIR  253,0     4096       2 /
+
 ping    2048 vagrant  txt    REG  253,0    72776 1835881 /usr/bin/ping
+
 ping    2048 vagrant  mem    REG  253,0    31176 1841606 /usr/lib/x86_64-linux-gnu/libnss_dns-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0    51832 1841607 /usr/lib/x86_64-linux-gnu/libnss_files-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0  3035952 1835290 /usr/lib/locale/locale-archive
+
 ping    2048 vagrant  mem    REG  253,0   137584 1841525 /usr/lib/x86_64-linux-gnu/libgpg-error.so.0.28.0
+
 ping    2048 vagrant  mem    REG  253,0  2029224 1841468 /usr/lib/x86_64-linux-gnu/libc-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0   101320 1841650 /usr/lib/x86_64-linux-gnu/libresolv-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0  1168056 1835853 /usr/lib/x86_64-linux-gnu/libgcrypt.so.20.2.5
+
 ping    2048 vagrant  mem    REG  253,0    31120 1841471 /usr/lib/x86_64-linux-gnu/libcap.so.2.32
+
 ping    2048 vagrant  mem    REG  253,0   191472 1841428 /usr/lib/x86_64-linux-gnu/ld-2.31.so
+
 ping    2048 vagrant    0u   CHR  136,1      0t0       4 /dev/pts/1
+
 ping    2048 vagrant    1w   REG  253,0   172607 1048685 /home/vagrant/ping_log (deleted)
+
 ping    2048 vagrant    2u   CHR  136,1      0t0       4 /dev/pts/1
+
 ping    2048 vagrant    3u  icmp             0t0   35662 00000000:0004->00000000:0000
+
 ping    2048 vagrant    4u  sock    0,9      0t0   35663 protocol: PINGv6
+
 root@vagrant:/home/vagrant# df -k
+
 Filesystem                        1K-blocks      Used Available Use% Mounted on
+
 udev                                2999144         0   2999144   0% /dev
+
 tmpfs                                608864      1028    607836   1% /run
+
 /dev/mapper/ubuntu--vg-ubuntu--lv  32380720   4440560  26272272  15% /
+
 tmpfs                               3044312         0   3044312   0% /dev/shm
+
 tmpfs                                  5120         0      5120   0% /run/lock
+
 tmpfs                               3044312         0   3044312   0% /sys/fs/cgroup
+
 /dev/loop2                            63488     63488         0 100% /snap/core20/1376
+
 /dev/loop0                            56960     56960         0 100% /snap/core18/2344
+
 /dev/loop3                            63488     63488         0 100% /snap/core20/1405
+
 /dev/sda2                            999320    108612    821896  12% /boot
+
 /dev/loop1                            56832     56832         0 100% /snap/core18/2128
+
 /dev/loop4                            69632     69632         0 100% /snap/lxd/22526
+
 /dev/loop5                            69504     69504         0 100% /snap/lxd/22753
+
 /dev/loop6                            44800     44800         0 100% /snap/snapd/15177
+
 /dev/loop7                            45824     45824         0 100% /snap/snapd/15314
+
 vagrant                           497275900 197895500 299380400  40% /vagrant
+
 tmpfs                                608860         0    608860   0% /run/user/1000
 
 
-файл ping_log уладен , место на диске высвобождено . 
+файл ping_log уладен, место на диске высвобождено. 
 
+---
+---
 root@vagrant:/home/vagrant# lsof -p 2048
+
 COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
+
 ping    2048 vagrant  cwd    DIR  253,0  2883584 1051845 /home/vagrant
+
 ping    2048 vagrant  rtd    DIR  253,0     4096       2 /
+
 ping    2048 vagrant  txt    REG  253,0    72776 1835881 /usr/bin/ping
+
 ping    2048 vagrant  mem    REG  253,0    31176 1841606 /usr/lib/x86_64-linux-gnu/libnss_dns-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0    51832 1841607 /usr/lib/x86_64-linux-gnu/libnss_files-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0  3035952 1835290 /usr/lib/locale/locale-archive
+
 ping    2048 vagrant  mem    REG  253,0   137584 1841525 /usr/lib/x86_64-linux-gnu/libgpg-error.so.0.28.0
+
 ping    2048 vagrant  mem    REG  253,0  2029224 1841468 /usr/lib/x86_64-linux-gnu/libc-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0   101320 1841650 /usr/lib/x86_64-linux-gnu/libresolv-2.31.so
+
 ping    2048 vagrant  mem    REG  253,0  1168056 1835853 /usr/lib/x86_64-linux-gnu/libgcrypt.so.20.2.5
+
 ping    2048 vagrant  mem    REG  253,0    31120 1841471 /usr/lib/x86_64-linux-gnu/libcap.so.2.32
+
 ping    2048 vagrant  mem    REG  253,0   191472 1841428 /usr/lib/x86_64-linux-gnu/ld-2.31.so
+
 ping    2048 vagrant    0u   CHR  136,1      0t0       4 /dev/pts/1
+
 ping    2048 vagrant    1w   REG  253,0   200543 1048685 /home/vagrant/ping_log (deleted)
+
 ping    2048 vagrant    2u   CHR  136,1      0t0       4 /dev/pts/1
+
 ping    2048 vagrant    3u  icmp             0t0   35662 00000000:0004->00000000:0000
+
 ping    2048 vagrant    4u  sock    0,9      0t0   35663 protocol: PINGv6
+
 root@vagrant:/home/vagrant# echo '' > /proc/2048/fd/1
+
 root@vagrant:/home/vagrant# cat /dev/null > /proc/2048/fd/1
+
 root@vagrant:/home/vagrant# > /proc/2048/fd/1
+
 root@vagrant:/home/vagrant# truncate -s 0 /proc/2048/fd/1
 
 перенаправил поток данных 
 
-
-
+---
+---
 root@vagrant:/home/vagrant# ls -l
+
 total 12
+
 -rw-rw-r-- 1 vagrant vagrant    0 Mar 28 18:38 test
+
 -rw-rw-r-- 1 vagrant vagrant    9 Mar 28 18:36 test0
+
 -rw-rw-r-- 1 vagrant vagrant    9 Mar 28 18:38 test1
+
 -rw-r--r-- 1 root    root    1744 Apr  6 17:52 test.txt
 
 файл ping_log не обнаружен
 
-
+---
+---
 
 root@vagrant:/home/vagrant# cat /proc/2048/fd/1
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2874 ttl=54 time=7.69 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2875 ttl=54 time=7.45 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2876 ttl=54 time=7.60 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2877 ttl=54 time=7.66 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2878 ttl=54 time=7.75 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2879 ttl=54 time=8.51 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2880 ttl=54 time=7.46 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2881 ttl=54 time=8.16 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2882 ttl=54 time=7.96 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2883 ttl=54 time=8.08 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2884 ttl=54 time=8.08 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2885 ttl=54 time=7.58 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2886 ttl=54 time=7.11 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2887 ttl=54 time=7.99 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2888 ttl=54 time=8.17 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2889 ttl=54 time=8.80 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2890 ttl=54 time=8.47 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2891 ttl=54 time=7.88 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2892 ttl=54 time=8.19 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2893 ttl=54 time=7.97 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2894 ttl=54 time=7.91 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2895 ttl=54 time=8.22 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2896 ttl=54 time=8.18 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2897 ttl=54 time=7.23 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2898 ttl=54 time=7.80 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2899 ttl=54 time=8.61 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2900 ttl=54 time=8.47 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2901 ttl=54 time=8.24 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2902 ttl=54 time=8.06 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2903 ttl=54 time=8.19 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2904 ttl=54 time=8.29 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2905 ttl=54 time=7.90 ms
+
 64 bytes from ya.ru (87.250.250.242): icmp_seq=2906 ttl=54 time=7.42 ms
 
 процесс продолжает работать 
 
-
+---
+---
 root@vagrant:/home/vagrant# df -k
+
 Filesystem                        1K-blocks      Used Available Use% Mounted on
+
 udev                                2999144         0   2999144   0% /dev
+
 tmpfs                                608864      1028    607836   1% /run
+
 /dev/mapper/ubuntu--vg-ubuntu--lv  32380720   4440392  26272440  15% /
+
 tmpfs                               3044312         0   3044312   0% /dev/shm
+
 tmpfs                                  5120         0      5120   0% /run/lock
+
 tmpfs                               3044312         0   3044312   0% /sys/fs/cgroup
+
 /dev/loop2                            63488     63488         0 100% /snap/core20/1376
+
 /dev/loop0                            56960     56960         0 100% /snap/core18/2344
+
 /dev/loop3                            63488     63488         0 100% /snap/core20/1405
+
 /dev/sda2                            999320    108612    821896  12% /boot
+
 /dev/loop1                            56832     56832         0 100% /snap/core18/2128
+
 /dev/loop4                            69632     69632         0 100% /snap/lxd/22526
+
 /dev/loop5                            69504     69504         0 100% /snap/lxd/22753
+
 /dev/loop6                            44800     44800         0 100% /snap/snapd/15177
+
 /dev/loop7                            45824     45824         0 100% /snap/snapd/15314
+
+
 vagrant                           497275900 197904064 299371836  40% /vagrant
+
 tmpfs                                608860         0    608860   0% /run/user/1000
 
 
 При проверке df -k место изменилось, но не значительно (высвобождено было гораздо больше). Системные логи продолжает работать, по-этому место на диске изменяется.   
 
+---
 
 
 4. Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
