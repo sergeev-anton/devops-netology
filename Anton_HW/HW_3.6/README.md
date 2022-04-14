@@ -112,7 +112,9 @@ HTTP/1.1 301 Moved Permanently - HTTP/1.1 301 Moved Permanently - означае
 2. Повторите задание 1 в браузере, используя консоль разработчика F12.
 
 ---
-ссылки на картинки 3 шт 
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/HW_3.6/1.JPG)
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/HW_3.6/2.JPG)
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/HW_3.6/3.JPG)
 
 ---
 
@@ -129,7 +131,7 @@ speedtest.net
 
 мой ip 46.22.49.20
 
-ссылка 
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/HW_3.6/4.JPG)
 
 ---
 
