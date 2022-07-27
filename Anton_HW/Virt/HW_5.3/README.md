@@ -81,6 +81,60 @@ root@ASSET-10510:/home/vagrant#
 -----
 https://hub.docker.com/r/antonsergeev/nginx-netology/tags
 -----
+Доработка задания 
+
+
+С ресурса https://github.com/dockerfile/nginx/blob/master/Dockerfile  берем конфиг для dockerfile вносим команду COPU 
+и описываем откуда взять файл (index.html) и куда его необходимо скопировать .
+ 
+ 
+ --
+ 30 lines (24 sloc)  634 Bytes
+
+#
+# Nginx Dockerfile
+#
+# https://github.com/dockerfile/nginx
+#
+
+# Pull base image.
+FROM dockerfile/ubuntu
+
+# Install Nginx.
+RUN \
+  add-apt-repository -y ppa:nginx/stable && \
+  apt-get update && \
+  apt-get install -y nginx && \
+  rm -rf /var/lib/apt/lists/* && \
+  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
+  chown -R www-data:www-data /var/lib/nginx
+
+# Define mountable directories.
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+
+# Define working directory.
+WORKDIR /etc/nginx
+
+# COPY 
+FROM nginx:1.21.3
+COPY "путь к необходимому файлу"index.html /usr/share/nginx/html/index.html
+
+# Define default command.
+CMD ["nginx"]
+
+# Expose ports.
+EXPOSE 80
+EXPOSE 443
+ --
+ 
+ 
+Создаем файл index.html и вписываем в 
+него выше упомянутые данные ('<html><head>Hey, Netology</head><body><h1>I am DevOps Engineer!</h1></body></html>'). 
+Далее делаем docker build нового контейнера , далее заходим в запущенный контейнер командой exce -ti и проверяем файл 
+index.html  командой cat 
+  
+
+
 ````
 ---
 
