@@ -352,15 +352,16 @@ service_account_id: aje9fggpc5ar1a8fi0na
 created_at: "2022-08-24T18:10:22.420609323Z"
 key_algorithm: RSA_2048
 
-![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.4/3.JPG)
+
 
 ````
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.4/3.JPG)
 ---
 
 Задача 3 
 
 ---
-````bash
+
 
 ![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.4/1.JPG)
 
@@ -372,5 +373,5 @@ key_algorithm: RSA_2048
 
 ![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.4/graf%202.JPG)
 
-````
+
 ---
