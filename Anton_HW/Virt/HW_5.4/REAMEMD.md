@@ -5,7 +5,7 @@ vagrant@NETOLOGY:~$ yc init
 Welcome! This command will take you through the configuration process.
 Please go to https://oauth.yandex.ru/authorize?response_type=token&client_id=1a6                                                                                                                                                             990aa636648e9b2ef855fa7bec2fb in order to obtain OAuth token.
 
-Please enter OAuth token: AQAAAABiY8BkAATuwWP4pG6KckHmmZJ37zmrskM
+Please enter OAuth token: AQAAAA*******************7zmrskM
 You have one cloud available: 'antonsergeev-devopsnetology' (id = b1g53m3oi7gunbee2up1). 
 It is going to be used by default.
 Please choose folder to use:
