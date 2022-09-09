@@ -643,7 +643,7 @@ ytv16ox8thln   swarm_monitoring_unsee              replicated   1/1        cloud
 
 ![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.5/4.JPG)
 
-![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.5/5.JPG)
+
 
 # Задача 4
 
@@ -651,5 +651,7 @@ ytv16ox8thln   swarm_monitoring_unsee              replicated   1/1        cloud
 - её функционала, что она делает и зачем она нужна:
 
 Блокируем swarm, чтобы защитить ключ шифрования. 
+
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.5/5.JPG)
 
 ![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Virt/HW_5.5/6.JPG)
