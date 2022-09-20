@@ -1,31 +1,36 @@
 # Задача 1
 
-- Используя docker поднимите инстанс PostgreSQL (версию 13). Данные БД сохраните в volume. Подключитесь к БД PostgreSQL используя psql.
-Создаем том для связи с БД, запускаем контейнер с postgres:13, подключаемся к БД используя psql
+Используя docker поднимите инстанс PostgreSQL (версию 13). Данные БД сохраните в volume. 
+
+- вывода списка БД
+- подключения к БД
+- вывода списка таблиц
+- вывода описания содержимого таблиц
+- выхода из psql
+
 
 ---
 ````bash
-root@vb-micrapc:/# docker volume create vol_pg_hw6_4
-vol_pg_hw6_4
-root@vb-micrapc:/# docker volume ls
+
+root@NETOLOGY:/# docker volume create vol_postgre
+vol_postgre
+root@NETOLOGY:/# docker volume ls
 DRIVER    VOLUME NAME
-local     vol_pg_hw6_4
-root@vb-micrapc:/# docker run -e POSTGRES_PASSWORD=123 -e POSTGRES_USER=test -p 5432:5432 -v /var/lib/docker/volumes/vol_pg_hw6_4:/var/lib/pgsql/data postgres:13
-root@vb-micrapc:/# docker ps -a
+local     vol_postgre
+root@NETOLOGY:/# docker run -e POSTGRES_PASSWORD=111 -e POSTGRES_USER=test -p 5432:5432 -v /var/lib/docker/volumes/vol_postgre:/var/lib/pgsql/data postgres:13
+root@NETOLOGY:/# docker ps -a
 CONTAINER ID   IMAGE         COMMAND                  CREATED          STATUS          PORTS                                       NAMES
-973a03ec2dd5   postgres:13   "docker-entrypoint.s…"   42 seconds ago   Up 41 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   unruffled_chatterjee
-root@vb-micrapc:/# psql -h 127.0.0.1 -U test
+3e3264f78f68   postgres:13   "docker-entrypoint.s…"   42 seconds ago   Up 41 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   jolly_bose
+root@NETOLOGY:/# psql -h 127.0.0.1 -U test
 Password for user test:
 psql (14.3 (Ubuntu 14.3-0ubuntu0.22.04.1), server 13.7 (Debian 13.7-1.pgdg110+1))
 Type "help" for help.
 
 test=#
 
-````
----
-Воспользуйтесь командой ? для вывода подсказки по имеющимся в psql управляющим командам. Найдите и приведите управляющие команды для:
 
-вывода списка БД
+# вывода списка БД
+
 test=# \l
                              List of databases
    Name    | Owner | Encoding |  Collate   |   Ctype    | Access privileges
@@ -37,11 +42,15 @@ test=# \l
            |       |          |            |            | test=CTc/test
  test      | test  | UTF8     | en_US.utf8 | en_US.utf8 |
 (4 rows)
-подключения к БД
+
+# подключения к БД
+
 test=# \c test
 psql (14.3 (Ubuntu 14.3-0ubuntu0.22.04.1), server 13.7 (Debian 13.7-1.pgdg110+1))
 You are now connected to database "test" as user "test".
-вывода списка таблиц
+
+# вывода списка таблиц
+
 test=# \dtS+
                                                List of relations
    Schema   |          Name           | Type  | Owner | Persistence | Access method |    Size    | Description
@@ -53,7 +62,9 @@ test=# \dtS+
 ....
  pg_catalog | pg_user_mapping         | table | test  | permanent   | heap          | 8192 bytes |
 (62 rows)
-вывода описания содержимого таблиц ( \d[S+] NAME )
+
+# вывода описания содержимого таблиц ( \d[S+] NAME )
+
 test=# \dS+  pg_aggregate
                                    Table "pg_catalog.pg_aggregate"
       Column      |   Type   | Collation | Nullable | Default | Storage  | Stats target | Description
@@ -85,24 +96,41 @@ Indexes:
 Access method: heap
 
 test=#
-выхода из psql
-test=# \q
-Используя psql создайте БД test_database. Изучите бэкап БД. Восстановите бэкап БД в test_database. Перейдите в управляющую консоль psql внутри контейнера. Подключитесь к восстановленной БД и проведите операцию ANALYZE для сбора статистики по таблице. Используя таблицу pg_stats, найдите столбец таблицы orders с наибольшим средним значением размера элементов в байтах. Приведите в ответе команду, которую вы использовали для вычисления и полученный результат.
-Проверим, что в контейнере действительно есть test_dump.sql. Создадим базу данных test_database
 
-root@vb-micrapc:/# docker exec -it 973a03ec2dd5 bash
-root@973a03ec2dd5:/# ls /var/lib/pgsql/data/_data/backup/
+# выхода из psql
+
+test=# \q
+
+````
+---
+
+# Задача 2
+
+Используя psql создайте БД test_database.
+Изучите бэкап БД. 
+Восстановите бэкап БД в test_database.
+Перейдите в управляющую консоль psql внутри контейнера.
+Подключитесь к восстановленной БД и проведите операцию ANALYZE для сбора статистики по таблице.
+Используя таблицу pg_stats, найдите столбец таблицы orders с наибольшим средним значением размера элементов в байтах.
+Приведите в ответе команду, которую вы использовали для вычисления и полученный результат.
+
+---
+````bash
+
+root@NETOLOGY:/# docker exec -it 3e3264f78f68 bash
+root@3e3264f78f68:/# ls /var/lib/pgsql/data/_data/backup/
 test_dump.sql
-root@973a03ec2dd5:/# psql -h localhost -p 5432 -U test
+
+root@3e3264f78f68:/# psql -h localhost -p 5432 -U test
 psql (13.7 (Debian 13.7-1.pgdg110+1))
 Type "help" for help.
 
 test=# CREATE DATABASE test_database;
 CREATE DATABASE
 test=# \q
-Перенаправляем бэкап в базу данных
 
-root@973a03ec2dd5:/# psql test_database < /var/lib/pgsql/data/_data/backup/test_dump.sql -U test
+
+root@3e3264f78f68:/# psql test_database < /var/lib/pgsql/data/_data/backup/test_dump.sql -U test
 SET
 SET
 SET
@@ -132,10 +160,12 @@ COPY 8
 (1 row)
 
 ALTER TABLE
-root@973a03ec2dd5:/#
-Подключаемся к postgres, проверим восстановление БД из бекапа
+root@3e3264f78f68:/#
 
-root@973a03ec2dd5:/# psql -h localhost -p 5432 -U test
+
+
+
+root@3e3264f78f68:/# psql -h localhost -p 5432 -U test
 psql (13.7 (Debian 13.7-1.pgdg110+1))
 Type "help" for help.
 
@@ -149,13 +179,13 @@ test_database=# \dt
 (1 row)
 
 test_database=#
-Проводим операцию ANALYZE для сбора статистики по таблице.
+
 
 test_database=# ANALYZE VERBOSE orders;
 INFO:  analyzing "public.orders"
 INFO:  "orders": scanned 1 of 1 pages, containing 8 live rows and 0 dead rows; 8 rows in sample, 8 estimated total rows
 ANALYZE
-Используя таблицу pg_stats, находим столбец таблицы orders с наибольшим средним значением размера элементов в байтах. Т.к. avg_width столбец типа integer показывает срений размер элементов в столбце, байты, то команда будет выглядеть следующим образом:
+
 
 test_database=# select max(avg_width) from pg_stats where tablename='orders';
  max
@@ -164,9 +194,24 @@ test_database=# select max(avg_width) from pg_stats where tablename='orders';
 (1 row)
 
 test_database=#
-Архитектор и администратор БД выяснили, что ваша таблица orders разрослась до невиданных размеров и поиск по ней занимает долгое время. Вам, как успешному выпускнику курсов DevOps в нетологии предложили провести разбиение таблицы на 2 (шардировать на orders_1 - price>499 и orders_2 - price<=499).
-Предложите SQL-транзакцию для проведения данной операции.
-Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders? Ручное разбиение возможно исключить если предусматриваются какие-то шаблнные правила по сбору таблицы (например CREATE RULE, CONSTRAINT CHECK)
+
+````
+---
+ 
+# Задача 3
+
+Архитектор и администратор БД выяснили, что ваша таблица orders разрослась до невиданных размеров и поиск по ней 
+занимает долгое время. Вам, как успешному выпускнику курсов DevOps в нетологии предложили провести разбиение 
+таблицы на 2 (шардировать на orders_1 - price>499 и orders_2 - price<=499).
+
+- Предложите SQL-транзакцию для проведения данной операции.
+- Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders? 
+Ручное разбиение возможно исключить если предусматриваются какие-то шаблнные правила по сбору таблицы
+(например CREATE RULE, CONSTRAINT CHECK)
+
+---
+````bash
+
 test_database=# \dt
         List of relations
  Schema |  Name  | Type  | Owner
@@ -188,16 +233,27 @@ test_database=# \dt
 (3 rows)
 
 test_database=#
-Используя утилиту pg_dump создайте бекап БД test_database. Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца title для таблиц test_database?
-Создаем бэкап БД test_database
 
-root@973a03ec2dd5:/# pg_dump -U test test_database > /var/lib/pgsql/data/_data/backup/test_db_dump.sql
-root@973a03ec2dd5:/var/lib/pgsql/data/_data/backup# ls
+````
+---
+
+
+# Задача 4
+
+Используя утилиту pg_dump создайте бекап БД test_database. Как бы вы доработали бэкап-файл, 
+чтобы добавить уникальность значения столбца title для таблиц test_database?
+
+---
+````bash
+
+root@3e3264f78f68:/# pg_dump -U test test_database > /var/lib/pgsql/data/_data/backup/test_db_dump.sql
+root@3e3264f78f68:/var/lib/pgsql/data/_data/backup# ls
 test_db_dump.sql  test_dump.sql
-root@973a03ec2dd5:/var/lib/pgsql/data/_data/backup#
-Для уникальности можно добавить индекс CREATE INDEX ON orders (lower(title))
+root@3e3264f78f68:/var/lib/pgsql/data/_data/backup#
 
-root@973a03ec2dd5:/var/lib/pgsql/data/_data/backup# tail test_db_dump.sql
+# Для уникальности можно добавить индекс CREATE INDEX ON orders (lower(title))
+
+root@3e3264f78f68:/var/lib/pgsql/data/_data/backup# tail test_db_dump.sql
 ...
 CREATE TABLE public.orders (
     id integer NOT NULL,
@@ -205,3 +261,6 @@ CREATE TABLE public.orders (
     price integer DEFAULT 0
 );
 ...
+
+````
+---
