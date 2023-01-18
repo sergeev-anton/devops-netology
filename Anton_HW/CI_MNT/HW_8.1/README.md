@@ -1,5 +1,6 @@
 1.Попробуйте запустить playbook на окружении из test.yml, зафиксируйте какое значение имеет факт some_fact 
 для указанного хоста при выполнении playbook'a.
+
 ---
 ````bash
 root@NETOLOGY:/opt/pyton_3.11# ansible --version
