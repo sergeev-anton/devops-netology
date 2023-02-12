@@ -1,0 +1,94 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  handlers:
+    - name: Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  tasks:
+    - block:
+        - name: Get clickhouse distrib
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+            dest: "./{{ item }}-{{ clickhouse_version }}.rpm"
+          with_items: "{{ clickhouse_packages }}"
+      rescue:
+        - name: Get clickhouse distrib
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+            dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
+    - name: Install clickhouse packages
+      become: true
+      ansible.builtin.yum:
+        name:
+          - clickhouse-common-static-{{ clickhouse_version }}.rpm
+          - clickhouse-client-{{ clickhouse_version }}.rpm
+          - clickhouse-server-{{ clickhouse_version }}.rpm
+      notify: Start clickhouse service
+# Принудительный старт сервиса clickhouse-server, иначе не получится создать БД
+    - name: Start clickhuose-server
+      ansible.builtin.command: "/etc/init.d/clickhouse-server start"
+# Задержка после рестарта сервера, что бы успел запустится
+    - name: Pause 10 sec
+      ansible.builtin.pause:
+        seconds: 10
+    - name: Create database
+      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc !=82
+      changed_when: create_db.rc == 0
+- name: Install Vector
+  hosts: vector-01
+  vars_files:
+    - group_vars/vector/vars.yml
+  handlers:
+    - name: Start vector service
+      ansible.builtin.shell: "vector --config {{ vector_home }}/config/vector.toml > /dev/null 2>&1 &"
+  tasks:
+    - block:
+        - name: Create directrory for vector
+          file:
+            state: directory
+            path: "{{ vector_home }}"
+            mode: 0755
+          tags: vector
+        - name: Get distrib
+          get_url:
+            url: "https://packages.timber.io/vector/{{ version }}/vector-{{ version }}-x86_64-unknown-linux-gnu.tar.gz"
+            dest: "/tmp/vector-{{ version }}-x86_64-unknown-linux-gnu.tar.gz"
+            mode: 0755
+            timeout: 60
+            force: true
+            validate_certs: false
+          register: get_vector
+          until: get_vector is succeeded
+          tags: vector
+        - name: Extract vector in the installation directory
+          become: true
+          unarchive:
+            copy: false
+            src: "/tmp/vector-{{ version }}-x86_64-unknown-linux-gnu.tar.gz"
+            dest: "{{ vector_home }}"
+            extra_opts: [--strip-components=2]
+            creates: "{{ vector_home }}/bin/vector"
+          tags: vector
+        - name: Copy vector servise file
+          copy:
+            src: "{{ vector_home }}/bin/vector"
+            dest: "/usr/bin/"
+            mode: 0755
+            remote_src: yes
+        - name: Copy vector *.servise files 
+          copy:
+            src: "{{ vector_home }}/etc/systemd/"
+            dest:     "/etc/systemd/system/"
+            remote_src: yes
+        - name: Deploy config Vector
+          template:
+            src: vector.j2
+            dest: "{{ vector_home }}/config/vector.toml"
+            mode: 0755
+          tags: vector
+          notify: Start vector service
