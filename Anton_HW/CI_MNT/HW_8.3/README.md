@@ -42,9 +42,9 @@ internal_ip_address_node01_yandex_cloud = "158.160.41.72"
 ````
 ---
 
-Созданные виртуальные машины
+Созданны виртуальные машины
 
-![](------------------------------------------------------------)
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/CI_MNT/HW_8.3/img/8-3_1.jpg)
 
 ### - Основная часть
 
@@ -53,7 +53,7 @@ internal_ip_address_node01_yandex_cloud = "158.160.41.72"
 3. Tasks должны: скачать статику lighthouse, установить nginx или любой другой webserver, настроить его конфиг для 
 открытия lighthouse, запустить webserver.
 
-[site.yml](-----------------------------------------------------------)
+[site.yml](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/CI_MNT/HW_8.3/playbook/site.yml)
 
 4. Приготовьте свой собственный inventory файл prod.yml.
 ````bash
@@ -139,14 +139,14 @@ vector-01                  : ok=5    changed=0    unreachable=0    failed=0    s
 ````
 Страница lighthouse
 
-![](--------------------------------------)
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/CI_MNT/HW_8.3/img/8-3_2.jpg)
 9. Подготовьте README.md файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть 
 параметры и теги.
 
-[[README_PLAYBOOK.md]](----------------------------------------------)
+[[README_PLAYBOOK.md]](----------------------------------------------------)
 
 10. Готовый playbook выложите в свой репозиторий, поставьте тег 08-ansible-03-yandex на фиксирующий коммит, в ответ 
 предоставьте ссылку на него.
 
-[PLAYBOOK](-----------------------------------------------------)
+[PLAYBOOK](https://github.com/sergeev-anton/devops-netology/tree/main/Anton_HW/CI_MNT/HW_8.3/playbook)
 
