@@ -1,0 +1,12 @@
+server {
+    listen       80;
+    server_name  localhost {{ hostvars['lighthouse-01'].ansible_host }};
+
+    access_log {{ lighthouse_log_dir }}/{{ lighthouse_log_name }}_access.log;
+    error_log {{ lighthouse_log_dir }}/{{ lighthouse_log_name }}_error.log;
+
+    location / {
+        root   {{ lighthouse_dir }};
+        index   index.html;
+    }
+}

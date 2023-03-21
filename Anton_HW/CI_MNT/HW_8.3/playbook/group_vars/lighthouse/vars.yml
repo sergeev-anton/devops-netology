@@ -1,0 +1,6 @@
+---
+lighthouse_vcs: https://github.com/VKCOM/lighthouse.git
+lighthouse_dir: /opt/lighthouse
+lighthouse_log_dir: /var/log/nginx
+lighthouse_log_name: lighthouse_log
+nginx_user_name: root
