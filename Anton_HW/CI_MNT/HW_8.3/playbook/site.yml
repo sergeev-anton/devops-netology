@@ -1,0 +1,169 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  handlers:
+    - name: Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  tasks:
+    - block:
+        - name: Get clickhouse distrib
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+            dest: "/home/centos/{{ item }}-{{ clickhouse_version }}.rpm"
+          with_items: "{{ clickhouse_packages }}"
+    - block:
+        - name: Get clickhouse common-static distrib
+          ansible.builtin.get_url:
+            url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+            dest: "/home/centos/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+    - name: Install clickhouse packages
+      become: true
+      ansible.builtin.yum:
+        name:
+          - clickhouse-client-{{ clickhouse_version }}.rpm
+          - clickhouse-server-{{ clickhouse_version }}.rpm
+          - clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm
+      notify: Start clickhouse service
+ # Настройка конфига clickhouse
+    - name: Deploy config clickhouse
+      ansible.builtin.template:
+        src: clickhouse.config.j2
+        dest: "{{ clickhouse_config_path }}"
+        mode: 0644
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+      become: true
+# Настройка пользователей clickhouse
+    - name: Deploy users config clickhouse
+      ansible.builtin.template:
+        src: clickhouse.users.j2
+        dest: "{{ clickhouse_users_path }}"
+        mode: 0644
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+      become: true
+# Принудительный старт сервиса clickhouse-server, иначе не получится создать БД
+    - name: Flush handlers
+      ansible.builtin.meta: flush_handlers
+# Задержка после рестарта сервера, что бы успел запустится
+    - name: Pause 10 sec
+      ansible.builtin.pause:
+        seconds: 10
+# Создание БД
+    - name: Create database
+      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc !=82
+      changed_when: create_db.rc == 0
+# Установка Vector
+- name: Install Vector
+  hosts: vector
+  handlers:
+    - name: Start Vector service
+      become: true
+      ansible.builtin.systemd:
+        name: vector
+        state: restarted
+  tasks:
+    - name: Get Vector distrib
+      ansible.builtin.get_url:
+        url: "https://packages.timber.io/vector/{{ vector_version }}/vector-{{ vector_version }}-1.x86_64.rpm"
+        dest: "./vector-{{ vector_version }}-1.x86_64.rpm"
+        mode: 0644
+    - name: Install Vector packages
+      become: true
+      ansible.builtin.yum:
+        name: vector-{{ vector_version }}-1.{{ ansible_architecture }}.rpm
+        state: present
+      notify: Start Vector service
+    - name: Deploy config Vector
+      ansible.builtin.template:
+        src: vector.j2
+        dest: /etc/vector/vector.toml
+        mode: 0644
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+        validate: vector validate --no-environment --config-toml %s
+      become: true
+      notify: Start Vector service
+    - name: Creates directory
+      become: true
+      file:
+        path: /var/lib/vector/local_logs
+        state: directory
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid }}"
+        mode: 0644
+      notify: Start Vector service
+# Установка Nginx для Lighthose
+- name: Install Nginx
+  hosts: lighthouse
+  handlers:
+    - name: Start nginx service
+      become: true
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+  tasks:
+    - name: Install epel-release
+      become: true
+      yum:
+        name: epel-release
+        state: present
+    - name: Install Nginx
+      become: true
+      yum:
+        name: nginx
+        state: present
+      notify: Start nginx service
+    - name: Create Nginx config
+      become: true
+      template:
+        src: nginx.j2
+        dest: /etc/nginx/nginx.conf
+        mode: 0644
+      notify: Start nginx service
+# Create lighthouse directory
+    - name: Create lighthouse directory
+      become: true
+      file:
+        path: "{{ lighthouse_dir }}"
+        state: directory
+        owner: "{{ nginx_user_name }}"
+        group: "{{ nginx_user_name }}"
+        mode: 0755
+# Install Lighthose
+- name: Install lighthouse
+  hosts: lighthouse
+  handlers:
+    - name: Reload nginx service
+      become: true
+      command: nginx -s reload
+  pre_tasks:
+    - name: Install git
+      become: true
+      yum:
+        name: git
+        state: present
+  tasks:
+    - name: Copy lighthouse from git
+      git:
+        repo: "{{ lighthouse_vcs }}"
+        version: master
+        dest: "{{ lighthouse_dir }}"
+      become: true
+    - name: Create lighthouse config
+      become: true
+      template:
+        src: lighthouse.j2
+        dest: /etc/nginx/conf.d/lighthouse.conf
+        mode: 0755
+      notify: Reload nginx service
+# Вывод адоеса подключения к lighthouse
+  post_tasks:
+    - name: Show connect URL lighthouse
+      debug:
+        msg: "http://{{ ansible_host }}/#http://{{ hostvars['clickhouse-01'].ansible_host }}:8123/?user={{ clickhouse_user }}"
