@@ -1,4 +1,4 @@
-- ### В playbook было дописано  
+- ### В playbook было дописано :  
 
 group_vars/vector/vars.yaml - параметры для установки сервиса Vector 
 group_vars/lighthouse/vars.yaml - параметры для установки сервиса Lighthouse 
