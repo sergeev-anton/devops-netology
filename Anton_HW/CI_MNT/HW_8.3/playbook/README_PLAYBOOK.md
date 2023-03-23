@@ -42,7 +42,7 @@
 ---
 - Добавлена task установки деплоя Lighthouse, ее состав:
 ````bash
-1. name: Start nginx service - старт сервиса (выполниться в конце)
+1. name: Start nginx service - старт сервиса 
 2. name: Install Nginx - установка сервиса (необходим для работы lighthouse)
 3. name: Create Nginx config - копирование конфигурационного файла
 4. name: Create lighthouse directory - создание директории для lighthouse
