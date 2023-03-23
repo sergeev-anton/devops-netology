@@ -1,40 +1,47 @@
 - ### В playbook было дописано :  
 ---
+````bash
 - group_vars/vector/vars.yaml - параметры для установки сервиса Vector 
 - group_vars/lighthouse/vars.yaml - параметры для установки сервиса Lighthouse 
 - group_vars/clickhouse/vars.yaml - параметры для установки сервиса Clickhouse
+````
 ---
 
 ---
+````bash
 - inventory/prod.yaml - описание хостов для развертывания сервисов (получен автоматически при создании ВМ terraform)
+````
 ---
 
 - файлы конфигурации сервисов для последующего его развертывания:
-
 ---
+````bash
 - templates/vector.j2 
 - templates/clickhouse.config.j2 
 - templates/clickhouse.users.j2 
 - templates/lighthouse.j2 
 - templates/nginx.j2 
 - templates/vector.service.j2  файлы конфигурации сервисов для последующего его развертывания
+````
 ---
 
 В site.yml внесены следующие изменения:
 
 ---
-- Добавлена task для развертывания vector, ее состав:
-
+ 
+- Добавлена task для развертывания vector, ее состав:   
+````bash
 1. handlers "Start vector service" - старт сервиса 
 2. name: Create directory for vector - создание директории установки ПО Vector (путь определен в vector/vars.yaml)
 3. name: Get distrib - получение .rpm пакета ПО путем скачивания с официального ресурса
 4. name: Install Vector packages - установка .rpm пакета
 5. name: Deploy config Vector - копирование конфигурационного файла Vector
+````
 ---
 
 ---
 - Добавлена task установки деплоя Lighthouse, ее состав:
-
+````bash
 1. name: Start nginx service - старт сервиса (выполниться в конце)
 2. name: Install Nginx - установка сервиса (необходим для работы lighthouse)
 3. name: Create Nginx config - копирование конфигурационного файла
@@ -44,4 +51,5 @@
 7. name: Copy lighthouse from git - получение дистрибутива lighthouse и копирование его в рабочую директорию
 8. name: Create lighthouse config - копирование конфигурационного файла nginx необходимого для работы lighthouse
 9. name: Show connect URL lighthouse - получение адреса подключения к lighthouse
+````
 ---
