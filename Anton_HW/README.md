@@ -24,7 +24,7 @@
 14. [Использование Python для решения типовых DevOps задач](https://github.com/sergeev-anton/devops-netology/tree/main/Anton_HW/DevOps/HW_4.2)
 15. [Языки разметки JSON и YAML](https://github.com/sergeev-anton/devops-netology/tree/main/Anton_HW/DevOps/HW_4.3)
 
-![](https://github.com/sergeev-anton/devops-netology/blob/main/Pict_cer/Cer.jpg)
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Pict_cer/Cer.jpg)
 
  **_Учебный модуль_** **Виртуализация, базы данных и Terraform**
 
@@ -45,7 +45,7 @@
 12. [Инфраструктура как код](https://github.com/sergeev-anton/devops-netology/tree/main/Anton_HW/Virt/HW_7.1)
 13. [Введение в Golang](https://github.com/sergeev-anton/devops-netology/tree/main/Anton_HW/Virt/HW_7.5)
 
-![](https://github.com/sergeev-anton/devops-netology/blob/main/Pict_cer/Cer2.jpg)
+![](https://github.com/sergeev-anton/devops-netology/blob/main/Anton_HW/Pict_cer/Cer2.jpg)
 
 **_Учебный модуль_** **CI, мониторинг и управление конфигурациями**
 
